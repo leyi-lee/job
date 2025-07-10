@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/stretchr/testify/assert"
+	"go.uber.org/goleak"
 	"runtime"
 	"testing"
 	"time"
@@ -63,6 +64,11 @@ func (s *test_st) TimeoutHandler(ret interface{}, err error) {
 func (s *test_st) withSubTask() *test_st {
 	s.subTask = true
 	return s
+}
+
+func TestMain(m *testing.M) {
+	goleak.VerifyTestMain(m, goleak.IgnoreTopFunction("github.com/leyi-lee/job.printGoroutineNums.func1"))
+	//os.Exit()
 }
 
 // TestResultTimeout 有等待时长，且收集结果
@@ -125,7 +131,7 @@ func TestNoResultNotTime(t *testing.T) {
 	printJson(ret)
 
 	as.NoError(err)
-	time.Sleep(15 * time.Second)
+	time.Sleep(5 * time.Second)
 
 }
 
@@ -159,7 +165,7 @@ func TestResultNoTimeout(t *testing.T) {
 	as.Error(err) // 有错误是对的
 	as.Nil(ret)
 
-	time.Sleep(15 * time.Second)
+	time.Sleep(10 * time.Second)
 }
 
 // TestEmbed 测试嵌套
