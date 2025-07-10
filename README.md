@@ -18,7 +18,7 @@
 ## 安装
 
 ```bash
-go get github.com/yourusername/job
+go get github.com/leyi-lee/job
 ```
 
 ## 快速开始
@@ -30,7 +30,7 @@ import (
     "fmt"
     "time"
     
-    "github.com/yourusername/job"
+    "github.com/leyi-lee/job"
 )
 
 func main() {
